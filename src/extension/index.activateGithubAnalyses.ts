@@ -9,7 +9,6 @@ import fetch, { Response } from 'node-fetch';
 import { Fix, Log, Result } from 'sarif';
 import { authentication, ConfigurationTarget, Disposable, extensions, OutputChannel, ProgressLocation, window, workspace } from 'vscode';
 import { augmentLog, removeFirstMatch } from '../shared';
-import '../shared/extension';
 import { API, GitExtension, Repository } from './git';
 import { driverlessRules } from './loadLogs';
 import { Panel } from './panel';

@@ -6,7 +6,6 @@
 import assert from 'assert';
 import { URI as Uri } from 'vscode-uri';
 import { getFileName } from '../shared';
-import '../shared/extension';
 import { mockVscode, mockVscodeTestFacing } from '../test/mockVscode';
 
 const proxyquire = require('proxyquire').noCallThru();

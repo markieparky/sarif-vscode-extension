@@ -3,7 +3,6 @@
 
 import { action, computed, IObservableValue, observable } from 'mobx';
 import { sortByInPlace } from '../shared';
-import '../shared/extension';
 
 export class Column<T> {
     width: IObservableValue<number>

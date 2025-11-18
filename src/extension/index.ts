@@ -8,7 +8,6 @@ import { diffChars } from 'diff';
 import { observe } from 'mobx';
 import { CancellationToken, commands, DiagnosticSeverity, Disposable, ExtensionContext, languages, OutputChannel, TextDocument, Uri, window, workspace } from 'vscode';
 import { removeFirstMatch } from '../shared';
-import '../shared/extension';
 import { getOriginalDoc } from './getOriginalDoc';
 import { activateDecorations } from './index.activateDecorations';
 import { activateFixes } from './index.activateFixes';

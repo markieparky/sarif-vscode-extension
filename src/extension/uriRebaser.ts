@@ -3,7 +3,6 @@
 
 import { Uri, window, workspace, ConfigurationTarget } from 'vscode';
 import { getFileName } from '../shared';
-import '../shared/extension';
 import { Store } from './store';
 import uriExists from './uriExists';
 import { VersionControlDetails } from 'sarif';
