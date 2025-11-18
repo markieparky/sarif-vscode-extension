@@ -56,6 +56,54 @@ function format(template: string | undefined, args?: string[]) {
     return template.replace(/{(\d+)}/g, (_, group) => args[group]);
 }
 
+/**
+ * Returns the filename component after the last '/'.
+ */
+export function getFileName(s: string): string {
+    return s.substring(s.lastIndexOf('/') + 1, s.length);
+}
+
+/**
+ * Returns the directory path before the last '/', with a leading '/' stripped.
+ */
+export function getDirPath(s: string): string {
+    return s.substring(0, s.lastIndexOf('/')).replace(/^\//g, '');
+}
+
+/**
+ * Returns the last element of the array, or undefined if empty.
+ */
+export function lastOf<T>(arr: T[]): T {
+    return arr[arr.length - 1];
+}
+
+/**
+ * Finds the first element matching the predicate, removes it from the array,
+ * and returns it. If none found, returns undefined.
+ */
+export function removeFirstMatch<T>(arr: T[], predicate: (item: T) => boolean): false | T | undefined {
+    const idx = arr.findIndex(predicate as any);
+    return idx >= 0 && arr.splice(idx, 1).pop();
+}
+
+export type Selector<T> = (_: T) => number | string;
+
+/**
+ * In-place stable-ish sort by a selector returning number|string.
+ */
+export function sortByInPlace<T>(arr: T[], selector: Selector<T>, descending = false): T[] {
+    const invert = descending ? -1 : 1;
+    arr.sort((a, b) => {
+        const aa = selector(a);
+        const bb = selector(b);
+        if (typeof aa === 'string' && typeof bb === 'string') return invert * aa.localeCompare(bb);
+        if (typeof aa === 'number' && typeof bb === 'number') return invert * (aa - bb);
+        return 0;
+    });
+    return arr;
+}
+
+
 export function mapDistinct(pairs: [string, string][]): Map<string, string> {
     const distinct = new Map<string, string | undefined>();
     for (const [key, value] of pairs) {
