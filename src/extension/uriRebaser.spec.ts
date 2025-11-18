@@ -5,6 +5,7 @@
 
 import assert from 'assert';
 import { URI as Uri } from 'vscode-uri';
+import { getFileName } from '../shared';
 import '../shared/extension';
 import { mockVscode, mockVscodeTestFacing } from '../test/mockVscode';
 
@@ -33,7 +34,7 @@ describe('baser', () => {
             './uriExists': () => { throw new Error(); },
         });
         const distinctArtifactNames = new Map([
-            [artifactUri.file, artifactUri]
+            [getFileName(artifactUri), artifactUri]
         ]);
 
         // Need to restructure product+test to better simulate the calculation distinctLocalNames.
@@ -54,7 +55,7 @@ describe('baser', () => {
             './uriExists': () => { throw new Error(); },
         });
         const distinctArtifactNames = new Map([
-            [artifactUri.file, artifactUri]
+            [getFileName(artifactUri), artifactUri]
         ]);
         const rebaser = new UriRebaser({ distinctArtifactNames });
         assert.strictEqual(await rebaser.translateLocalToArtifact(localUri), artifactUri);
@@ -73,7 +74,7 @@ describe('baser', () => {
             './uriExists': () => { throw new Error(); },
         });
         const distinctArtifactNames = new Map([
-            [artifactUri.file, artifactUri]
+            [getFileName(artifactUri), artifactUri]
         ]);
         const rebaser = new UriRebaser({ distinctArtifactNames });
         assert.strictEqual(await rebaser.translateLocalToArtifact(localUri), artifactUri);

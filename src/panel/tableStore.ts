@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { action, computed, IObservableValue, observable } from 'mobx';
+import { sortByInPlace } from '../shared';
 import '../shared/extension';
 
 export class Column<T> {
@@ -71,7 +72,7 @@ export class TableStore<T, G> {
             group.items.push(item);
             item.group = group;
         });
-        return [...map.values()].sortBy(g => g.items.length, true); // High to low.
+        return sortByInPlace([...map.values()], (g => g.items.length), true); // High to low.
     }
 
     // Unable to express "columns of any varying types" otherwise.
@@ -94,7 +95,7 @@ export class TableStore<T, G> {
         if (!column) return;
         const {toNumber, toString} = column;
         const toSortable = toNumber ?? toString;
-        items.sortBy(item => toSortable(item.item), sortDir === SortDir.Dsc);
+        sortByInPlace(items, item => toSortable(item.item), sortDir === SortDir.Dsc);
     }
 
     @computed public get groupsFilteredSorted() {

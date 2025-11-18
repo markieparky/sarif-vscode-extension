@@ -251,11 +251,11 @@ export function parseArtifactLocation(result: Pick<Result, '_log' | '_run'>, any
     const uriBase = uriBaseId ? result._run.originalUriBaseIds?.[uriBaseId]?.uri : undefined;
 
     // A shorter more transparent URI format would be:
-    // `sarif://${encodeURIComponent(result._log._uri)}/${result._run._index}/${anyArtLoc.index}/${uri?.file ?? 'Untitled'}`
+    // `sarif://${encodeURIComponent(result._log._uri)}/${result._run._index}/${anyArtLoc.index}/${uri ? getFileName(uri) : 'Untitled'}`
     // However between workspace.openTextDocument() and registerTextDocumentContentProvider/provideTextDocumentContent()
     // VS Code fails to maintain the authority value (possibly due to an encoding bug).
     const uriContents = runArtCon?.text || runArtCon?.binary
-        ? encodeURI(`sarif:${encodeURIComponent(result._log._uri)}/${result._run._index}/${anyArtLoc.index}/${uri?.file ?? 'Untitled'}`)
+        ? encodeURI(`sarif:${encodeURIComponent(result._log._uri)}/${result._run._index}/${anyArtLoc.index}/${uri ? getFileName(uri) : 'Untitled'}`)
         : undefined;
     return [uri, uriBase, uriContents];
 }

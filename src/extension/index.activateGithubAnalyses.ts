@@ -8,7 +8,7 @@ import { observe } from 'mobx';
 import fetch, { Response } from 'node-fetch';
 import { Fix, Log, Result } from 'sarif';
 import { authentication, ConfigurationTarget, Disposable, extensions, OutputChannel, ProgressLocation, window, workspace } from 'vscode';
-import { augmentLog } from '../shared';
+import { augmentLog, removeFirstMatch } from '../shared';
 import '../shared/extension';
 import { API, GitExtension, Repository } from './git';
 import { driverlessRules } from './loadLogs';
@@ -404,7 +404,7 @@ export function activateGithubAnalyses(disposables: Disposable[], store: Store, 
 
         if (currentLogUris) {
             for (const currentLogUri of currentLogUris) {
-                store.logs.removeFirst(log => log._uri === currentLogUri);
+                removeFirstMatch(store.logs, (log => log._uri === currentLogUri));
             }
             currentLogUris = undefined;
         }
